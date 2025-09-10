@@ -1,26 +1,26 @@
 {
-    "id": "4D279ADC",
-    "path": "C:/Users/kcbra/Downloads/jour405/HW1_R_Basics.Rmd",
-    "project_path": "HW1_R_Basics.Rmd",
+    "id": "B3C65015",
+    "path": "C:/Users/kcbra/Downloads/jour405/UMD_Fees.Rmd",
+    "project_path": "UMD_Fees.Rmd",
     "type": "r_markdown",
-    "hash": "2485098887",
+    "hash": "2476541240",
     "contents": "",
     "dirty": false,
-    "created": 1757379539825.0,
+    "created": 1757523943861.0,
     "source_on_save": false,
     "relative_order": 2,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "108,6",
-        "scrollLine": "107"
+        "cursorPosition": "12,18",
+        "scrollLine": "8"
     },
     "folds": "",
-    "lastKnownWriteTime": 1757387476,
+    "lastKnownWriteTime": 1757432779,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1757387476291,
+    "last_content_update": 1757524102950,
     "read_only": false,
     "read_only_alternatives": []
 }
