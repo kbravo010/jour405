@@ -33,14 +33,15 @@ Calculate the total number of incidents per month for each category using `mutat
 
 ```{r}
 pg_crime_averages <- pg_crime |>
-  mutate(total_incidents = rowsum(Jan:Dec))
+  mutate(total_incidents = `Jan` + `Feb` + `Mar` + `Apr` + `May` + `Jun` + `Jul` + `Aug` + `Sep` + `Oct` + `Nov` + `Dec`) |>
+  mutate(average_incidents = total_incidents / 12)
 ```
 
 ### Task 5: Describe the Averages
 
-Examine the new dataframe, `pg_crime_averages`, by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the average number of incidents per month for each category. Which categories have the highest average number of incidents per month? Which have the lowest? What does this tell you about the pattern of crime in Prince George's County? Are there categories that you have questions about? Why or why not?
+Examine the new dataframe, `pg_crime_averages`, by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the average number of incidents per for each category. Which categories have the highest average number of incidents per month? Which have the lowest? What does this tell you about the pattern of crime in Prince George's County? Are there categories that you have questions about? Why or why not?
 
-ANSWER HERE
+The highest category is accident and the lowest is robbery residential as it does not have an answer meaning there is not enough information to determined what the average is. In PG County, we see a trend of theft within the area, whether it is a robbery, auto theft, or just theft itself which seems to be that trend. Yes, when realistically in a story where the data has the lowest but you want to write about it, does it make it more difficult to do so based on the minimal data given?
 
 
 ### Task 6: Testing a Theory
@@ -48,19 +49,27 @@ ANSWER HERE
 One theory about crime is that it is more likely to occur in the summer months. Test this theory by creating three new columns using `mutate()` that calculate the percentage change compared to the average for each category of crime for the months of June, July, and August. Call the new columns `june_change`, `july_change`, and `august_change`. Assign the result to a new dataframe called `summer_crime_averages`.
 
 ```{r}
+summer_crime_averages <- pg_crime |>
+  mutate(
+    june_change = ((Jun - average_incidents) / average_incidents) * 100,
+    july_change = ((Jul - average_incidents) / average_incidents) *100,
+    august_change = ((Aug - average_incidents) / average_incidents) * 100
+  )
 ```
 
 ### Task 7: Describe the Summer Crime Averages
 
 Look at the `summer_crime_averages` dataframe by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the percentage change in the average number of incidents per month for each category of crime for the months of June, July, and August. Do you see any patterns? What does this tell you about the theory that crime is more likely to occur in the summer months?
 
-ANSWER HERE
+As said before, there is an ongoing trend happening with accidents that seem to be increasing overtime.
 
 ### Task 8: What's the Story?
 
 Write up a lede and nutgraf of a story focused on the crime data in Prince George's County. It could be from any of the dataframes you've created in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
-ANSWER HERE
+In Prince George's County, there has been a significant increase in the total number of accidents within the year.
+
+There has been a total of 5776 accidents that had occurred within the year as December had been at its highest of 509 accidents since March which was at its lowest of 429. As the second highest crime in the county is auto vehicles stolen of 4790. There is an ongoing trend with the two highest crimes are in relation to vehicles that sparks concerns for the residents living in PG county.
 
 ### Task 9: Save Your Work and Put it on GitHub
 
