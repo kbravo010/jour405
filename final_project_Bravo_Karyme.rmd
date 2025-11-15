@@ -1,0 +1,58 @@
+---
+title: "Tuition Trends in Maryland and Virginia Colleges and Universities"
+output: html_notebook
+Name: Karyme Bravo
+---
+# Notes
+# 1. Data Source and Description
+# The assignment relates to a public dataset with the tuition info.
+# Tuition names, tuition levels, and the year information
+# Verifying where the CSV comes from and documentation to be place in my folder
+
+# I will add the links in Rmd as the dataset is broken down by school and year
+
+# 2. The data source itself
+# It would include the tuition info for Maryland and Virginia across their colleges and universities
+# The links that were provided from ELMS that are an external site.
+
+
+# 3. Notes on the data source and time period
+# Each row contains one school in that one year.
+# It would perhaps cover more than a decade (like 10 to 20 years)
+# Covers both public and private colleges
+
+# 4. Columns that will be important for the analysis
+# When I would load the data, it would have columns like:
+# institution_name
+# year
+# State (MD or VA)
+# tuition_out_of_state
+# tuition_in_state
+# type (whether public or private)
+
+# 5. What would be missing
+# The enrollment data
+# Details on public and private institutions unless it is included seperately
+
+# 6. Descriptive Stats (min, med, max)
+```{r}
+tuition <- read.csv("https://raw.githubusercontent.com/wellsdata/Jour405_student_repo_fall_2025/refs/heads/main/project/college_scorecard_2021_2024.csv")
+```
+# Maryland
+```{r}
+md <- tuition[tuition$state == "MD",]
+mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+median(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+min(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
+
+```
+# 7. Propose hypothesis newsworthy
+# Hypothesis 1: The tuition has increased in at a faster rate in Virginia than in Maryland
+# Hypothesis 2: Out of state tuition has increased and grown rapidly than in state tuition
+# Hypothesis 3: There are certain years that suddenly show an increase that can relate to the economy 
+# Hypothesis 4: Private colleges are the reason for the tuition increase.
+
+# 8. Questions
+# Should I compare median across the institutions and avoid private schools?
+# Should I adjust tuition increase that compares to the year?
