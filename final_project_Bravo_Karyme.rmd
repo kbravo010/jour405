@@ -45,8 +45,9 @@ mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 median(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 min(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
-
+sd(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 ```
+
 # 7. Propose hypothesis newsworthy
 # Hypothesis 1: The tuition has increased in at a faster rate in Virginia than in Maryland
 # Hypothesis 2: Out of state tuition has increased and grown rapidly than in state tuition
@@ -56,3 +57,70 @@ max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
 # 8. Questions
 # Should I compare median across the institutions and avoid private schools?
 # Should I adjust tuition increase that compares to the year?
+
+Part 2: Loading the data
+Load Data and inspection
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+tuition <- read.csv("https://raw.githubusercontent.com/wellsdata/Jour405_student_repo_fall_2025/refs/heads/main/project/college_scorecard_2021_2024.csv") |>
+  arrange(state) # Sort by state
+```
+
+Subset and Descriptive Stats of MD and VA
+#Maryland Stats
+```{r}
+md <- tuition[tuition$state == "MD",]
+mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+median(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+min(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
+sd(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+```
+
+#Virginia Stats
+```{r}
+va <- tuition[tuition$state == "VA",]
+mean(va$X2023_24_tuitionfee_in, na.rm = TRUE)
+median(va$X2023_24_tuitionfee_in, na.rm = TRUE)
+min(va$X2023_24_tuitionfee_in, na.rm = TRUE)
+max(va$X2023_24_tuitionfee_in, na.arm = TRUE)
+sd(va$X2023_24_tuitionfee_in, na.rm = TRUE)
+```
+Z-score
+```{r}
+```
+
+T-test
+```{r}
+# Period of the timeline
+t_test_states <- t.test(tuition_in ~ state, data = tuition)
+
+# Display results
+t_test_states
+
+# Visualization of Data
+state_summary <- tuition |>
+  group_by(state) |>
+  summarize(
+    mean_tuition = mean(tuition_in, na.rm = TRUE),
+    sd_tuition = sd(tuition_in, na.rm = TRUE),
+    schools = n(),
+    se_tuition = sd_tuition / sqrt(schools),
+    margin_error = qt(0.975, df = schools - 1) * se_tuition, 
+    # look at how we calculated this above
+    ci_lower = mean_tuition - margin_error,
+    ci_upper = mean_tuition + margin_error
+  )
+```
+
+Data visualization
+```{r}
+```
+
+
+
+
