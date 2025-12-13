@@ -38,13 +38,14 @@ Name: Karyme Bravo
 ```{r}
 tuition <- read.csv("https://raw.githubusercontent.com/wellsdata/Jour405_student_repo_fall_2025/refs/heads/main/project/college_scorecard_2021_2024.csv")
 ```
+
 # Maryland
 ```{r}
 md <- tuition[tuition$state == "MD",]
 mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 median(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 min(md$X2023_24_tuitionfee_in, na.rm = TRUE)
-max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
+max(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 sd(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 ```
 
@@ -59,7 +60,7 @@ sd(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 # Should I adjust tuition increase that compares to the year?
 
 Part 2: Loading the data
-Load Data and inspection
+# Load Data and inspection
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -77,49 +78,84 @@ md <- tuition[tuition$state == "MD",]
 mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 median(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 min(md$X2023_24_tuitionfee_in, na.rm = TRUE)
-max(md$X2023_24_tuitionfee_in, na.arm = TRUE)
+max(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 sd(md$X2023_24_tuitionfee_in, na.rm = TRUE)
 ```
+# Data Explanation for Maryland
+This is Maryland institutions that resulted in 93 schools. The average in-state tuition for Maryland colleges is at 18,035.2 which represents the average tuition cost across all Maryland institutions in the dataset. The median is 11,100 which means half of Maryland schools charge less than this amount and half charge more. This indicates that higher priced schools may be pulling the mean upward.
+Additionally, the minimum tuition is 3,314 while the maximum is 63,340, which shows a very wide range in tuition cots across the state of Maryland instutions. Lastly, the standard deviation is 17,663.76 which shows a substantial variation in tuition prices and highlighting the large difference between lower-cost and higher-cost schools.
 
-#Virginia Stats
+
+# Virginia Stats
 ```{r}
 va <- tuition[tuition$state == "VA",]
 mean(va$X2023_24_tuitionfee_in, na.rm = TRUE)
 median(va$X2023_24_tuitionfee_in, na.rm = TRUE)
 min(va$X2023_24_tuitionfee_in, na.rm = TRUE)
-max(va$X2023_24_tuitionfee_in, na.arm = TRUE)
+max(va$X2023_24_tuitionfee_in, na.rm = TRUE)
 sd(va$X2023_24_tuitionfee_in, na.rm = TRUE)
 ```
-Z-score
-```{r}
-```
+# Data Explanation for Virginia
+In the Virginia dataset, there are about 172 Virginia colleges and universities. The mean in-state tuition is 17,866.68, which is slightly lower than Maryland's average tuition. As the median is 15,200 which is closer to the mean than in Maryland that indicates a more evenly distributed tuition structure. Whereas, the minimum is about 4,835 an the maximum is 64,525, as this shows Virginia has a vast ride spread of tuition prices. Additionally, the standard deviation is 12,457.41 which is lower than Maryland's as this shows the tuition costs in Virginia is more consistent in the institutions.
 
-T-test
+
+# Means
+```{r}
+md_mean <- mean(md$X2023_24_tuitionfee_in, na.rm = TRUE)
+va_mean <- mean(va$X2023_24_tuitionfee_in, na.rm = TRUE)
+```
+This explains the average tuition for each state in varaibles that would be used as a reference and it helps compare the overall tuition costs between Maryland and Virginia.
+
+
+# Z-score
+```{r}
+overall_mean <- mean(tuition$X2023_24_tuitionfee_in, na.rm = TRUE)
+overall_sd <- sd(tuition$X2023_24_tuitionfee_in, na.rm = TRUE)
+
+```
+This shows the overall standard deviation for the entire dataset itself. These numbers will be used to calculate the z-score to compare each schools of their average costs for both states.
+
+
+
+# T-test
 ```{r}
 # Period of the timeline
-t_test_states <- t.test(tuition_in ~ state, data = tuition)
+t_test_states <- t.test(X2023_24_tuitionfee_in ~ state, data = tuition)
 
 # Display results
 t_test_states
-
-# Visualization of Data
-state_summary <- tuition |>
-  group_by(state) |>
-  summarize(
-    mean_tuition = mean(tuition_in, na.rm = TRUE),
-    sd_tuition = sd(tuition_in, na.rm = TRUE),
-    schools = n(),
-    se_tuition = sd_tuition / sqrt(schools),
-    margin_error = qt(0.975, df = schools - 1) * se_tuition, 
-    # look at how we calculated this above
-    ci_lower = mean_tuition - margin_error,
-    ci_upper = mean_tuition + margin_error
-  )
 ```
+I ran a t-test to indicate whether if there is a difference in-state tuition between Maryland and Virginia as it helps one of my hypothesis: as whether tuition is higher in one state than the other, which Maryland seems to have the higher cost.
 
-Data visualization
+
+
+# Data Visualization
 ```{r}
+ggplot(tuition, aes(x = state, y = X2023_24_tuitionfee_in)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution of In-State Tuition by State",
+    x = "State",
+    y = "In-State Tuition"
+  )
+theme_minimal()
 ```
+This boxplot shows the distribution of the tuition prices for Maryland and Virginia. We see that Maryland's boxplot is more likely to show a more higher costs due to private schools, while Virginia is more even.
+
+
+
+# Final Draft Story
+Title: "Maryland vs. Virginia: Who Pays More for College?"
+
+Students in Maryland and Virginia states are facing a difference in tuition. For the 2023-24 school year, as Maryland's average in-state tuition is $18,035, which is slightly higher than Virginia's in-state tuition which is at $17,867. However, the median is $11,100 in Maryland and $15,200 in Virginia as it displays how expensive private schools in Maryland push the average up, whole Virginia schools stays consistent and closer to the middle. Tuition in Maryland ranges from $3,314 to $63,340 with a standard deviation of $17,664. As Virginia ranges from $4,835 to $64,525, with a standard deviation of $12,457.
+
+There are about 90 schools that have missing tuition data and enrollment numbers that are not included, as the averages do not reflect the student. Additionally, private schools are skewing the Maryland numbers.
+
+# Reporting Plan
+The story will use boxplot and descriptive statistics that would visualize these patterns. It would examine whether public or private schools drive those tuition trends. The reporting would show how the differences between the two states can affect students affordability and their choices which can help inform families what to expect on the cost when applying for colleges; whether it is in the region or if it is in state.
+
+
+
 
 
 
